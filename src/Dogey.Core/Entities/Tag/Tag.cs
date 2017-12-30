@@ -10,7 +10,6 @@ namespace Dogey
         public ulong Id { get; set; }
         public ulong GuildId { get; set; }
         public ulong? ChannelId { get; set; }
-        public ulong OwnerId { get; set; }
         public string Name { get; set; }
         public string Content { get; set; }
         public bool IsCommand { get; set; }
@@ -18,5 +17,7 @@ namespace Dogey
 
         // Foreign Keys
         public List<TagAlias> Aliases { get; set; }
+        public List<TagEdit> Edits { get; set; }
+        public List<TagOwner> Owners { get; set; }
     }
 }

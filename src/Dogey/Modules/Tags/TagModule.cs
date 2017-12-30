@@ -53,7 +53,6 @@ namespace Dogey.Modules.Tags
 
             await _manager.CreateAsync(new Tag
             {
-                OwnerId = Context.User.Id,
                 GuildId = Context.Guild.Id,
                 Name = name,
                 Content = content,

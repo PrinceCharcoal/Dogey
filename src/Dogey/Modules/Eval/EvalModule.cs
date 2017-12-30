@@ -7,9 +7,9 @@ namespace Dogey.Modules.Eval
     [Group("eval"), Name("Eval")]
     public class EvalModule : DogeyModuleBase
     {
-        private readonly RoslynManager _roslyn;
+        private readonly RoslynService _roslyn;
 
-        public EvalModule(RoslynManager roslyn)
+        public EvalModule(RoslynService roslyn)
         {
             _roslyn = roslyn;
         }

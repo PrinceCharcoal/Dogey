@@ -1,14 +1,14 @@
-﻿using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using System;
+﻿using Discord;
 using Discord.Commands;
-using Discord;
 using Discord.WebSocket;
-using Octokit;
 using Google.Apis.Customsearch.v1;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Octokit;
+using System;
+using System.Threading.Tasks;
 
 namespace Dogey
 {
@@ -54,32 +54,23 @@ namespace Dogey
                     ApiKey = _config["tokens:google"],
                     MaxUrlLength = 256
                 }))
-                .AddDbContext<TagDatabase>(ServiceLifetime.Transient)
                 .AddDbContext<ConfigDatabase>(ServiceLifetime.Transient)
-                .AddDbContext<PatsDatabase>(ServiceLifetime.Transient)
-                .AddDbContext<ScriptDatabase>(ServiceLifetime.Transient)
-                .AddDbContext<PointsDatabase>(ServiceLifetime.Transient)
-                .AddDbContext<DogDatabase>(ServiceLifetime.Transient)
-                .AddTransient<TagManager>()
-                .AddTransient<PointsManager>()
-                .AddTransient<DogManager>()
                 .AddTransient<ConfigManager>()
-                .AddTransient<ScriptManager>()
                 .AddSingleton<CommandHandler>()
-                .AddSingleton<RoslynManager>()
-                .AddSingleton<ChannelWatcher>()
                 .AddSingleton<LoggingService>()
                 .AddSingleton<StartupService>()
-                .AddSingleton<PointsService>()
-                .AddSingleton<TagService>()
                 .AddSingleton<Random>()
-                .AddSingleton(_config);
+                .AddSingleton(_config)
+                .WithDogs()
+                .WithPoints()
+                .WithScripts()
+                .WithTags();
 
             var provider = services.BuildServiceProvider();
             provider.GetRequiredService<LoggingService>();
 
             await provider.GetRequiredService<StartupService>().StartAsync();
-
+            
             provider.GetRequiredService<CommandHandler>();
             provider.GetRequiredService<PointsService>();
             provider.GetRequiredService<ChannelWatcher>();

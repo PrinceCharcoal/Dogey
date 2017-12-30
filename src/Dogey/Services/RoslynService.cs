@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Dogey
 {
-    public class RoslynManager
+    public class RoslynService
     {
         private readonly IServiceProvider _provider;
 
-        public RoslynManager(IServiceProvider provider)
+        public RoslynService(IServiceProvider provider)
         {
             _provider = provider;
         }

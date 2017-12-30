@@ -11,9 +11,9 @@ namespace Dogey.Modules.Eval
     public class ScriptModule : DogeyModuleBase
     {
         private readonly ScriptManager _manager;
-        private readonly RoslynManager _roslyn;
+        private readonly RoslynService _roslyn;
 
-        public ScriptModule(ScriptManager manager, RoslynManager roslyn)
+        public ScriptModule(ScriptManager manager, RoslynService roslyn)
         {
             _manager = manager;
             _roslyn = roslyn;

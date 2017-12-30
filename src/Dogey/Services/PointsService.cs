@@ -10,9 +10,7 @@ namespace Dogey
         private readonly DiscordSocketClient _discord;
         private readonly PointsManager _manager;
         private readonly LoggingService _logger;
-
-        private const ulong _dapi = 81384788765712384;
-
+        
         public PointsService(
             DiscordSocketClient discord,
             PointsManager manager,
@@ -30,9 +28,6 @@ namespace Dogey
         {
             _ = Task.Run(async () =>
             {
-                if ((msg.Channel is IGuildChannel g) && g.Id == _dapi)
-                    return;
-
                 try
                 {
                     if (msg.Author.IsBot) return;

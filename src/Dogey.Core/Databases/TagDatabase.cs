@@ -8,7 +8,9 @@ namespace Dogey
     {
         public DbSet<Tag> Tags { get; private set; }
         public DbSet<TagAlias> Aliases { get; private set; }
+        public DbSet<TagEdit> Edits { get; private set;   }
         public DbSet<TagDefaults> Defaults { get; private set; }
+        public DbSet<TagOwner> Owners { get; private set; }
 
         public TagDatabase()
         {
@@ -39,9 +41,6 @@ namespace Dogey
                 .IsRequired();
             builder.Entity<Tag>()
                 .Property(x => x.GuildId)
-                .IsRequired();
-            builder.Entity<Tag>()
-                .Property(x => x.OwnerId)
                 .IsRequired();
             builder.Entity<Tag>()
                 .Property(x => x.Content)
