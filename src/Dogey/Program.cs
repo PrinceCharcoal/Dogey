@@ -9,6 +9,7 @@ using Octokit;
 using Google.Apis.Customsearch.v1;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
+using NTwitch.Rest;
 
 namespace Dogey
 {
@@ -35,6 +36,10 @@ namespace Dogey
                     LogLevel = LogSeverity.Verbose,
                     MessageCacheSize = 100
                 }))
+                .AddSingleton(new TwitchRestClient(new TwitchRestConfig
+                {
+                    LogLevel = NTwitch.LogSeverity.Verbose
+                }))
                 .AddSingleton(new CommandService(new CommandServiceConfig
                 {
                     DefaultRunMode = RunMode.Async,
@@ -60,11 +65,13 @@ namespace Dogey
                 .AddDbContext<ScriptDatabase>(ServiceLifetime.Transient)
                 .AddDbContext<PointsDatabase>(ServiceLifetime.Transient)
                 .AddDbContext<DogDatabase>(ServiceLifetime.Transient)
+                .AddDbContext<TwitchDatabase>(ServiceLifetime.Transient)
                 .AddTransient<TagManager>()
                 .AddTransient<PointsManager>()
                 .AddTransient<DogManager>()
                 .AddTransient<ConfigManager>()
                 .AddTransient<ScriptManager>()
+                .AddTransient<TwitchManager>()
                 .AddSingleton<CommandHandler>()
                 .AddSingleton<RoslynManager>()
                 .AddSingleton<ChannelWatcher>()
@@ -72,6 +79,7 @@ namespace Dogey
                 .AddSingleton<StartupService>()
                 .AddSingleton<PointsService>()
                 .AddSingleton<TagService>()
+                .AddSingleton<StreamStatusService>()
                 .AddSingleton<Random>()
                 .AddSingleton(_config);
 
@@ -82,8 +90,9 @@ namespace Dogey
 
             provider.GetRequiredService<CommandHandler>();
             provider.GetRequiredService<PointsService>();
-            provider.GetRequiredService<ChannelWatcher>();
+            //provider.GetRequiredService<ChannelWatcher>();
             provider.GetRequiredService<TagService>();
+            provider.GetRequiredService<StreamStatusService>().Start();
 
             await Task.Delay(-1);
         }
